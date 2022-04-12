@@ -22,8 +22,9 @@ namespace Supercyan.AnimalPeopleSample
         private Vector3 destinationPosition;
 
         private int LayerGround;
+        private int LayerPlayerIgnore;
 
-        [SerializeField] private const float m_destinationReachedThreshold = 0.1f;
+        [SerializeField] private float m_destinationReachedThreshold = 0.1f;
 
         [SerializeField] private float m_moveSpeed = 2;
         [SerializeField] private float m_turnSpeed = 200;
@@ -62,6 +63,7 @@ namespace Supercyan.AnimalPeopleSample
         private void Start()
         {
             LayerGround = LayerMask.NameToLayer("Ground");
+            LayerPlayerIgnore = LayerMask.NameToLayer("PlayerIgnore");
             destinationPosition = transform.position;
         }
 
@@ -135,7 +137,7 @@ namespace Supercyan.AnimalPeopleSample
                 RaycastHit hitData;
                 if (Physics.Raycast(ray, out hitData, Mathf.Infinity))
                 {
-                    if (hitData.transform.gameObject.layer == LayerGround || true)
+                    if (hitData.transform.gameObject.layer != LayerPlayerIgnore)
                     {
                        destinationPosition = hitData.point;
                     }
